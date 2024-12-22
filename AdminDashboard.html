@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .dashboard-container {
+      padding: 40px;
+    }
+    .card {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container dashboard-container">
+    <h2 class="text-center mb-4">Admin Dashboard</h2>
+    <nav class="nav justify-content-center mb-4">
+      <a class="nav-link active" href="#manageExams">Manage Exams</a>
+      <a class="nav-link" href="#viewSubmissions">View Submissions</a>
+      <a class="nav-link" href="#addExam">Add Exam</a>
+    </nav>
+    <div id="manageExams" class="card">
+      <div class="card-header bg-primary text-white">Manage Exams</div>
+      <div class="card-body">
+        <h5 class="card-title">Current Exams</h5>
+        <ul class="list-group">
+          <li class="list-group-item">Mathematics Exam <button class="btn btn-danger btn-sm float-end">Delete</button></li>
+          <li class="list-group-item">Physics Exam <button class="btn btn-danger btn-sm float-end">Delete</button></li>
+          <li class="list-group-item">Chemistry Exam <button class="btn btn-danger btn-sm float-end">Delete</button></li>
+        </ul>
+      </div>
+    </div>
+    <div id="viewSubmissions" class="card">
+      <div class="card-header bg-info text-white">View Submissions</div>
+      <div class="card-body">
+        <h5 class="card-title">Recent Submissions</h5>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Student Name</th>
+              <th>Exam</th>
+              <th>Score</th>
+              <th>Submission Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>John Doe</td>
+              <td>Mathematics Exam</td>
+              <td>100</td>
+              <td>2024-09-30 14:00</td>
+            </tr>
+            <tr>
+              <td>Jane Smith</td>
+              <td>Physics Exam</td>
+              <td>85</td>
+              <td>2024-09-30 14:05</td>
+            </tr>
+            <tr>
+              <td>Tom Brown</td>
+              <td>Chemistry Exam</td>
+              <td>90</td>
+              <td>2024-09-30 14:10</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="addExam" class="card">
+      <div class="card-header bg-success text-white">Add Exam</div>
+      <div class="card-body">
+        <form id="addExamForm">
+          <div class="mb-3">
+            <label for="examTitle" class="form-label">Exam Title</label>
+            <input type="text" class="form-control" id="examTitle" required>
+          </div>
+          <div class="mb-3">
+            <label for="examDate" class="form-label">Exam Date</label>
+            <input type="date" class="form-control" id="examDate" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Add Exam</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    const addExamForm = document.getElementById('addExamForm');
+
+    addExamForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+      const examTitle = document.getElementById('examTitle').value;
+      const examDate = document.getElementById('examDate').value;
+
+      alert(`Exam Added: ${examTitle} on ${examDate}`);
+      addExamForm.reset();
+    });
+  </script>
+</body>
+</html>

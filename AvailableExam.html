@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Available Exams</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .exam-container {
+      margin-top: 50px;
+    }
+    .timer {
+      font-size: 24px;
+      font-weight: bold;
+      color: red;
+    }
+    .exam-content {
+      display: none;
+    }
+    .result-content {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container exam-container">
+    <h2 class="text-center mb-4">Available Exams</h2>
+
+    <!-- Exam List -->
+    <div class="card">
+      <div class="card-header bg-primary text-white">
+        Select an Exam to Start
+      </div>
+      <div class="card-body">
+        <ul class="list-group">
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            Mathematics Exam
+            <button class="btn btn-success" id="startExamBtn">Start Exam</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Exam Timer and Content -->
+    <div class="exam-content mt-4">
+      <h3>Exam in Progress</h3>
+      <p class="timer" id="timer">15:00</p>
+      <div class="card">
+        <div class="card-body">
+          <p><strong>Question 1:</strong> What is 5 + 7?</p>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="question1" id="answer1" value="10">
+            <label class="form-check-label" for="answer1">10</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="question1" id="answer2" value="12">
+            <label class="form-check-label" for="answer2">12</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="question1" id="answer3" value="13">
+            <label class="form-check-label" for="answer3">13</label>
+          </div>
+          <button class="btn btn-primary mt-3" id="submitExamBtn">Submit Exam</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Result Content -->
+    <div class="result-content mt-4">
+      <h3>Exam Result</h3>
+      <div class="alert alert-info" id="resultMessage">Calculating your result, please wait...</div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- JavaScript to Handle Exam Timer and Result Calculation -->
+  <script>
+    const startExamBtn = document.getElementById('startExamBtn');
+    const examContent = document.querySelector('.exam-content');
+    const timerDisplay = document.getElementById('timer');
+    const submitExamBtn = document.getElementById('submitExamBtn');
+    const resultContent = document.querySelector('.result-content');
+    const resultMessage = document.getElementById('resultMessage');
+    let timeLeft = 15 * 60; // 15 minutes in seconds
+    let timerInterval;
+
+    // Function to start the exam
+    startExamBtn.addEventListener('click', () => {
+      document.querySelector('.card').style.display = 'none'; // Hide available exams list
+      examContent.style.display = 'block'; // Show exam content
+      startTimer();
+    });
+
+    // Timer function
+    function startTimer() {
+      timerInterval = setInterval(() => {
+        let minutes = Math.floor(timeLeft / 60);
+        let seconds = timeLeft % 60;
+        seconds = seconds < 10 ? '0' + seconds : seconds;
+        timerDisplay.innerHTML = `${minutes}:${seconds}`;
+        timeLeft--;
+
+        // When time is up
+        if (timeLeft < 0) {
+          clearInterval(timerInterval);
+          alert('Time is up! Your exam will be submitted.');
+          submitExam();
+        }
+      }, 1000);
+    }
+
+    // Function to handle exam submission
+    submitExamBtn.addEventListener('click', submitExam);
+    function submitExam() {
+      clearInterval(timerInterval); // Stop the timer
+      examContent.style.display = 'none'; // Hide exam content
+      resultContent.style.display = 'block'; // Show result content
+
+      // Simulate result calculation
+      setTimeout(calculateResult, 10000); // 10 seconds delay for result calculation
+    }
+
+    // Function to calculate and display the result
+    function calculateResult() {
+      const selectedAnswer = document.querySelector('input[name="question1"]:checked');
+      let score = 0;
+
+      // Check the correct answer (for demo, correct answer is 12)
+      if (selectedAnswer && selectedAnswer.value === '12') {
+        score = 100; // Full score
+      }
+
+      // Display the result message
+      resultMessage.innerHTML = `Your score is: ${score}/100`;
+      resultMessage.classList.remove('alert-info');
+      resultMessage.classList.add(score === 100 ? 'alert-success' : 'alert-danger');
+    }
+  </script>
+</body>
+</html>
